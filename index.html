@@ -12,20 +12,12 @@
     <body>
         <div id="pattern-list"></div>
         <div class="chart" id="description-tree"></div>
-
         <script src="vendor/raphael.js"></script>
         <script src="vendor/treant-js/Treant.js"></script>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/jquery/jquery.easing.js"></script>
         <script src="vendor/jquery.csv.js"></script>
-
         <script src="js/tree.js"></script>
-        <script>
-            read_csv('resources/structure.csv')
-                .then(tree => chart_config('DescPmntInSingle', tree))
-                .then(config => Treant(config));
-        </script>
         <script src="js/menu.js"></script>
-
     </body>
 </html>

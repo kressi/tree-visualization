@@ -30,6 +30,7 @@ function row_with_value(table, pattern, keys) {
             c.addEventListener("click", function () {
                 draw_tree(pattern[key]);
             });
+            c.classList.add("pattern-link");
         };
     });
 };

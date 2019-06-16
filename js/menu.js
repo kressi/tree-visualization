@@ -1,21 +1,25 @@
 window.addEventListener("load", function(){
-    let table = document.createElement("table");
     read_csv('resources/pattern.csv')
-        .then(patterns => table_with_value(table, patterns))
-        .then(() => document.getElementById("pattern-list").appendChild(table));
+        .then(patterns => table_with_value(document, patterns))
+        .then(table => document.getElementById("pattern-list").appendChild(table));
 });
 
-function table_with_value(table, patterns) {
+function table_with_value(document, patterns) {
+    let table = document.createElement("table");
     if (patterns.length > 0) {
         let keys = Object.keys(patterns[0]);
         let head = table.insertRow();
         keys.forEach(key => {
-            cell_with_value(head, key);
+            let th = document.createElement("TH");
+            let text = document.createTextNode(key);
+            th.appendChild(text);
+            head.appendChild(th);
         });
         patterns.forEach(pattern => {
             row_with_value(table, pattern, keys);
         });
     };
+    return table;
 };
 
 function row_with_value(table, pattern, keys) {

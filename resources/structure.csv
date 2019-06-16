@@ -1,4 +1,4 @@
-"id","sequence","childId"
+"CONTENT_ID","SEQUENCE","CHILD_CONTENT_ID"
 "DescPmntInSingle","1","HeaderPmntInSingle"
 "DescPmntInSingle","2","SubheaderBookingText"
 "DescPmntOutSingle","1","HeaderPmntOutSingle"

@@ -1,3 +1,7 @@
+const STRUCTURE_CSV = 'resources/structure.csv';
+const CHILD_ID = 'CHILD_CONTENT_ID';
+const CONTENT_ID = 'CONTENT_ID';
+
 async function read_csv(path) {
     const response = await fetch(path);
     const csv = await response.text();
@@ -5,7 +9,7 @@ async function read_csv(path) {
 };
 
 const structure = async () => {
-    return await read_csv('resources/structure.csv');
+    return await read_csv(STRUCTURE_CSV);
 }
 
 async function draw_tree(content_id) {
@@ -14,8 +18,8 @@ async function draw_tree(content_id) {
 }
 
 function desc_tree(content_id, tree) {
-    const sub_tree = tree.filter(obj => obj.id === content_id)
-                         .map(child => desc_tree(child.childId, tree));
+    const sub_tree = tree.filter(obj => obj[CONTENT_ID] === content_id)
+                         .map(child => desc_tree(child[CHILD_ID], tree));
     const tree_obj = {
         text: {name: content_id}
     };
@@ -42,6 +46,8 @@ const chart_config_0 = {
             nodeSpeed: 700,
             connectorsAnimation: "bounce",
             connectorsSpeed: 700
-        }
+        },
+        scrollbar: "None",
+        childrenDropLevel: 2
     }
 };

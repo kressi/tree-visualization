@@ -1,0 +1,11 @@
+/* https://stackoverflow.com/questions/15901030/reset-remove-css-styles-for-element-only */
+#pattern-list {
+    all: initial;
+    * {
+        all: unset;
+    }
+}
+
+.pattern-link {
+	color: blue;
+}

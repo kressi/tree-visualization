@@ -1,5 +1,8 @@
+const CONTENT_LINK = 'CONTENT_ID';
+const PATTERN_CSV = 'resources/pattern.csv';
+
 window.addEventListener("load", function(){
-    read_csv('resources/pattern.csv')
+    read_csv(PATTERN_CSV)
         .then(patterns => table_with_value(document, patterns))
         .then(table => document.getElementById("pattern-list").appendChild(table));
 });
@@ -26,7 +29,7 @@ function row_with_value(table, pattern, keys) {
     let r = table.insertRow();
     keys.forEach(key => {
         let c = cell_with_value(r, pattern[key]);
-        if (key === 'content_id') {
+        if (key === CONTENT_LINK) {
             c.addEventListener("click", function () {
                 draw_tree(pattern[key]);
             });

@@ -34,15 +34,15 @@ function createChartConfig(contentId, tree) {
 
 const CHART_CONFIG_0 = {
     chart: {
-        container: "#description-tree",
+        container: '#description-tree',
         animateOnInit: true,
         node: {
             collapsable: true
         },
         animation: {
-            nodeAnimation: "easeOutBounce",
+            nodeAnimation: 'easeOutBounce',
             nodeSpeed: 700,
-            connectorsAnimation: "bounce",
+            connectorsAnimation: 'bounce',
             connectorsSpeed: 700
         }
     }

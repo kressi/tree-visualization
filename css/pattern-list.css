@@ -1,11 +1,38 @@
-/* https://stackoverflow.com/questions/15901030/reset-remove-css-styles-for-element-only */
-#pattern-list {
-    all: initial;
-    * {
-        all: unset;
-    }
+.pattern-link {
+    color: blue;
+    cursor: pointer;
 }
 
-.pattern-link {
-	color: blue;
+#pattern-list .sort:before {
+    content: '↕ ';
+}
+
+#pattern-list .sort {
+    cursor: pointer; 
+}
+
+#pattern-list table {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+}
+
+#pattern-list td, #pattern-list th {
+    border: 1px solid #ddd;
+    padding: 2px;
+}
+
+#pattern-list tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#pattern-list tr:hover {
+    background-color: #ddd;
+}
+
+#pattern-list th {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
 }

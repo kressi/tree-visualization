@@ -1,27 +1,25 @@
 const STRUCTURE_CSV = 'resources/structure.csv';
-const CHILD_ID = 'CHILD_CONTENT_ID';
-const CONTENT_ID = 'CONTENT_ID';
 
-async function read_csv(path) {
+async function readCsv(path) {
     const response = await fetch(path);
     const csv = await response.text();
     return $.csv.toObjects(csv);
 };
 
 const structure = async () => {
-    return await read_csv(STRUCTURE_CSV);
+    return await readCsv(STRUCTURE_CSV);
 }
 
-async function draw_tree(content_id) {
-    structure().then(struct => chart_config(content_id, struct))
+async function drawTree(contentId) {
+    structure().then(struct => createChartConfig(contentId, struct))
                .then(config => Treant(config));
 }
 
-function desc_tree(content_id, tree) {
-    const sub_tree = tree.filter(obj => obj[CONTENT_ID] === content_id)
-                         .map(child => desc_tree(child[CHILD_ID], tree));
+function createChartNode(contentId, tree) {
+    const sub_tree = tree.filter(obj => obj['CONTENT_ID'] === contentId)
+                         .map(child => createChartNode(child['CHILD_CONTENT_ID'], tree));
     const tree_obj = {
-        text: {name: content_id}
+        text: {name: contentId}
     };
     if (sub_tree.length > 0) {
         tree_obj.children = sub_tree;
@@ -29,12 +27,12 @@ function desc_tree(content_id, tree) {
     return tree_obj;
 };
 
-function chart_config(content_id, tree) {
-    const node_structure = desc_tree(content_id, tree);
-    return $.extend({}, chart_config_0, {nodeStructure: node_structure});
+function createChartConfig(contentId, tree) {
+    const struct = createChartNode(contentId, tree);
+    return $.extend({}, CHART_CONFIG_0, {nodeStructure: struct});
 };
 
-const chart_config_0 = {
+const CHART_CONFIG_0 = {
     chart: {
         container: "#description-tree",
         animateOnInit: true,
@@ -46,8 +44,6 @@ const chart_config_0 = {
             nodeSpeed: 700,
             connectorsAnimation: "bounce",
             connectorsSpeed: 700
-        },
-        scrollbar: "None",
-        childrenDropLevel: 2
+        }
     }
 };

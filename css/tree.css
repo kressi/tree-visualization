@@ -27,7 +27,7 @@ body { background: #fff; }
 }
 
 .Treant .node.collapsed { 
-    background-color: #DEF82D;
+    background-color: #BED80D;
 }
 
 .Treant .node.collapsed .collapse-switch {

@@ -8,10 +8,9 @@ q:before,q:after { content:''; }
 abbr,acronym { border:0; }
 body { background: #fff; }
 
-/* optional Container STYLES */
-.chart { height: 600px; margin: 5px; width: auto; }
+/* Treant Styles */
 .Treant > .node {
-    background-color: #BED80D;
+    background-color: #E6FF34;
     padding: 3px;
     border: 1px solid #484848;
     border-radius: 3px;
@@ -21,6 +20,16 @@ body { background: #fff; }
     white-space: nowrap;
 }
 
-.Treant .collapse-switch { width: 100%; height: 100%; border: none; }
-.Treant .node.collapsed { background-color: #DEF82D; }
-.Treant .node.collapsed .collapse-switch { background: none; }
+.Treant .collapse-switch {
+    width: 100%;
+    height: 100%;
+    border: none; 
+}
+
+.Treant .node.collapsed { 
+    background-color: #DEF82D;
+}
+
+.Treant .node.collapsed .collapse-switch {
+    background: none;
+}

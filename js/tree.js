@@ -45,6 +45,7 @@ const CHART_CONFIG_0 = {
     chart: {
         container: '#description-tree',
         animateOnInit: true,
+        rootOrientation: 'WEST',
         node: {
             collapsable: true
         },

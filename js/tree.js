@@ -11,15 +11,18 @@ const structure = async () => {
 }
 
 async function drawTree(contentId) {
-    structure().then(struct => createChartConfig(contentId, struct))
+    structure().then(struct => createChartConfig(struct, contentId))
                .then(config => Treant(config));
 }
 
-function createChartNode(contentId, tree) {
+function createChartNode(tree, contentId, condition) {
     const sub_tree = tree.filter(obj => obj['CONTENT_ID'] === contentId)
-                         .map(child => createChartNode(child['CHILD_CONTENT_ID'], tree));
+                         .map(child => createChartNode(tree, child['CHILD_CONTENT_ID'], child['CONDITON']));
     const tree_obj = {
         text: {name: contentId}
+    };
+    if (condition) {
+        tree_obj.text.title = 'IF\a0'.concat(condition);
     };
     if (sub_tree.length > 0) {
         tree_obj.children = sub_tree;
@@ -27,8 +30,8 @@ function createChartNode(contentId, tree) {
     return tree_obj;
 };
 
-function createChartConfig(contentId, tree) {
-    const struct = createChartNode(contentId, tree);
+function createChartConfig(tree, contentId) {
+    const struct = createChartNode(tree, contentId);
     return $.extend({}, CHART_CONFIG_0, {nodeStructure: struct});
 };
 

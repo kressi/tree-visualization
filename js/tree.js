@@ -17,7 +17,7 @@ async function drawTree(contentId) {
 
 function createChartNode(tree, contentId, condition) {
     const sub_tree = tree.filter(obj => obj['CONTENT_ID'] === contentId)
-                         .map(child => createChartNode(tree, child['CHILD_CONTENT_ID'], child['CONDITON']));
+                         .map(child => createChartNode(tree, child['CHILD_CONTENT_ID'], child['CONDITION']));
     const tree_obj = {
         text: {name: contentId}
     };

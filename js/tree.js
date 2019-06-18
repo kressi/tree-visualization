@@ -8,17 +8,12 @@ async function readCsv(path) {
 };
 
 const structure = async () => {
-    return Promises.all([
-        readCsv(STRUCTURE_CSV),
-        readCsv(CONTENT_CSV),
-        readCsv(SIMPLE_CSV)
-    ]);
+    return await readCsv(STRUCTURE_CSV);
 }
 
 async function drawTree(contentId) {
-    structure().then( function([struct, content, simple]) {
-        createChartConfig(struct, contentId);
-    }).then(config => Treant(config));
+    structure().then(struct => createChartConfig(struct, contentId))
+               .then(config => Treant(config));
 }
 
 function createChartNode(tree, contentId, condition) {

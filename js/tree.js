@@ -9,7 +9,7 @@ async function readCsv(path) {
 };
 
 const data = async () => {
-    return Promises.all([
+    return Promise.all([
         readCsv(STRUCTURE_CSV),
         readCsv(CONTENT_CSV),
         readCsv(SIMPLE_CSV)

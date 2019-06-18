@@ -1,6 +1,7 @@
 const STRUCTURE_CSV = 'resources/structure.csv';
 const CONTENT_CSV = 'resources/content.csv';
 const SIMPLE_CSV = 'resources/simple-content.csv';
+const NODE_VALUES = ['SIMPLE_VALUE', 'MODE', 'PATTERN_NAME', 'SENSITIVITY'];
 
 async function readCsv(path) {
     const response = await fetch(path);
@@ -21,40 +22,57 @@ async function drawTree(contentId) {
           .then(config => Treant(config));
 };
 
-function createChartNode(data, contentId, condition) {
+function createChartNode(data, contentId, condition, simpleInd) {
     const tree = data[0];
+    let simpleChild = {cnt: 0};
     const subTree = tree.filter(obj => obj['CONTENT_ID'] === contentId)
-                        .map(child => createChartNode(data, child['CHILD_CONTENT_ID'], child['CONDITION']));
-    const [pattern, mode, sensitivity, value] = contentDescription(contentId, data);
+                        .map(child => createChartNode(data, child['CHILD_CONTENT_ID'], child['CONDITION'], simpleChild));
+    const [type, node] = getContent(contentId, data);
     const treeObj = {
-        text: {name: contentId}
+        text: createText(contentId, node, condition)
     };
-    let title = '';
-    if (pattern) { title = 'Pattern:\xa0'.concat(pattern); };
-    if (value) { title = 'Simple:\xa0'.concat(value); };
-    if (condition) { title = title.concat(' IF\xa0'.concat(condition)); };
-    if (title) { treeObj.text.title = title; };
-    let desc = '';
-    if (mode) { desc = 'Mode:\xa0'.concat(mode); };
-    if (sensitivity) { desc = desc.concat(' Sensitivity:\xa0'.concat(sensitivity)); };
-    if (desc) { treeObj.text.desc = desc; };
+
+    if (type === 'simple') { simpleInd.cnt++; };
+    if (simpleChild.cnt > 0) { treeObj.collapsed = true; };
     if (subTree.length > 0) { treeObj.children = subTree; };
+
     return treeObj;
 };
 
-function contentDescription(contentId, data) {
-    let simple = data[2].find(obj => obj['ID'] === contentId);
-    let content = data[1].find(obj => obj['ID'] === contentId);
-    let pattern, mode, sensitivity, value;
-    if (simple) {
-        mode = simple['MODE'];
-        value = simple['SIMPLE_VALUE'];
-    } else if (content) {
-        mode = content['MODE'];
-        pattern = content['PATTERN_NAME'];
-        sensitivity = content['SENSITIVITY'];
+function createText(contentId, nodeValues, condition) {
+    let text = { name: contentId };
+    NODE_VALUES.forEach(function(key) {
+        let value = nodeValues[key];
+        if (value) {
+            text[key] = createTextAttr(capitalize(key), value);
+        };
+    });
+    if (condition) {
+        text.condition = createTextAttr('IF', condition);
     };
-    return [pattern, mode, sensitivity, value];
+    return text;
+};
+
+function createTextAttr(attr, text) {
+    return attr + ':\xa0' + text;
+};
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+function getContent(contentId, data) {
+    let content = data[1].find(obj => obj['ID'] === contentId);
+    let simple = data[2].find(obj => obj['ID'] === contentId);
+    let node, type;
+    if (simple) {
+        type = 'simple';
+        node = simple;
+    } else if (content) {
+        type = 'content';
+        node = content;
+    };
+    return [type, node];
 };
 
 function createChartConfig(data, contentId) {

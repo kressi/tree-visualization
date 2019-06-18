@@ -87,15 +87,13 @@ function createFilter(doc, id, key, list) {
 
 function createDataRow(doc, pattern, keys) {
     let row = doc.createElement('TR');
+    row.classList.add('pattern-link');
+    row.addEventListener('click', function () {
+        drawTree(pattern['CONTENT_ID']);
+    });
     keys.forEach(key => {
         let cell = row.insertCell();
         cell.innerHTML = pattern[key];
-        if (key === 'CONTENT_ID') {
-            cell.addEventListener('click', function () {
-                drawTree(pattern[key]);
-            });
-            cell.classList.add('pattern-link');
-        };
         cell.classList.add(key);
     });
     return row;

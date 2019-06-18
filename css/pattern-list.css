@@ -1,5 +1,4 @@
 .pattern-link {
-    color: blue;
     cursor: pointer;
 }
 
@@ -14,6 +13,7 @@
 #pattern-list table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
+    width: 100%;
 }
 
 #pattern-list td, #pattern-list th {

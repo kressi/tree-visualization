@@ -4,16 +4,22 @@ const SIMPLE_CSV = 'resources/simple-content.csv';
 
 async function readCsv(path) {
     const response = await fetch(path);
-    return $.csv.toObjects(response.text());
+    const csv = await response.text();
+    return $.csv.toObjects(csv);
 };
 
-const structure = async () => {
-    return await readCsv(STRUCTURE_CSV);
+const data = async () => {
+    return Promises.all([
+        readCsv(STRUCTURE_CSV),
+        readCsv(CONTENT_CSV),
+        readCsv(SIMPLE_CSV)
+    ]);
 }
 
 async function drawTree(contentId) {
-    structure().then(struct => createChartConfig(struct, contentId))
-               .then(config => Treant(config));
+    data().then( function([struct, content, simple]) {
+        createChartConfig(struct, contentId);
+    }).then(config => Treant(config));
 }
 
 function createChartNode(tree, contentId, condition) {

@@ -66,8 +66,8 @@ function insertFilterRow(doc, keys, list) {
 };
 
 function createFilter(doc, id, key, list) {
+    let input = doc.getElementById(id);
     let fun = () => {
-        let input = doc.getElementById(id);
         let value = input.value;
         if (value) {
             list.filter( item => {

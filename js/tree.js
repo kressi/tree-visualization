@@ -1,18 +1,24 @@
 const STRUCTURE_CSV = 'resources/structure.csv';
+const CONTENT_CSV = 'resources/content.csv';
+const SIMPLE_CSV = 'resources/simple-content.csv';
 
 async function readCsv(path) {
     const response = await fetch(path);
-    const csv = await response.text();
-    return $.csv.toObjects(csv);
+    return $.csv.toObjects(response.text());
 };
 
 const structure = async () => {
-    return await readCsv(STRUCTURE_CSV);
+    return Promises.all([
+        readCsv(STRUCTURE_CSV),
+        readCsv(CONTENT_CSV),
+        readCsv(SIMPLE_CSV)
+    ]);
 }
 
 async function drawTree(contentId) {
-    structure().then(struct => createChartConfig(struct, contentId))
-               .then(config => Treant(config));
+    structure().then( function([struct, content, simple]) {
+        createChartConfig(struct, contentId);
+    }).then(config => Treant(config));
 }
 
 function createChartNode(tree, contentId, condition) {
@@ -22,7 +28,7 @@ function createChartNode(tree, contentId, condition) {
         text: {name: contentId}
     };
     if (condition) {
-        tree_obj.text.title = 'IF\a0'.concat(condition);
+        tree_obj.text.title = 'IF\xa0'.concat(condition);
     };
     if (sub_tree.length > 0) {
         tree_obj.children = sub_tree;

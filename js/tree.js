@@ -1,7 +1,12 @@
 const STRUCTURE_CSV = 'resources/structure.csv';
 const CONTENT_CSV = 'resources/content.csv';
 const SIMPLE_CSV = 'resources/simple-content.csv';
-const VALUE_KEYS = ['SIMPLE_VALUE', 'MODE', 'PATTERN_NAME', 'SENSITIVITY'];
+const NODE_VALUES = [
+    ['SIMPLE_VALUE', 'Value'],
+    ['MODE',         'Mode'],
+    ['PATTERN_NAME', 'Pattern'],
+    ['SENSITIVITY',  'Sensitivity']
+];
 
 async function readCsv(path) {
     const response = await fetch(path);
@@ -42,10 +47,10 @@ function createChartNode(data, contentId, condition, simpleInd) {
 function createText(contentId, nodeValues, condition) {
     let text = { name: contentId };
     if (nodeValues) {
-        VALUE_KEYS.forEach(function(key) {
+        NODE_VALUES.forEach(function([key, name]) {
             let value = nodeValues[key];
             if (value) {
-                text[key] = createTextAttr(capitalize(key), value);
+                text[key] = createTextAttr(name, value);
             };
         });
     } else {

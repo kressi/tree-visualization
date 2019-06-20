@@ -50,7 +50,7 @@ function createText(contentId, nodeValues, condition) {
         NODE_VALUES.forEach(function([key, name]) {
             let value = nodeValues[key];
             if (value) {
-                text[key] = createTextAttr(name, value);
+                text[name] = createTextAttr(name, value);
             };
         });
     } else {

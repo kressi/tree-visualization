@@ -38,30 +38,26 @@ function createTableHead(doc, keys) {
 function createTitleRow(doc, keys) {
     let row = doc.createElement('TR');
     keys.forEach(key => {
-        let th = doc.createElement('TH');
+        let th = insertChild(doc, row, 'TH');
         th.classList.add('sort');
         th.setAttribute('data-sort', key);
         let text = doc.createTextNode(key);
         th.appendChild(text);
-        row.appendChild(th);
     });
     return row;
 };
 
 function insertFilterRow(doc, keys, list) {
     let head = doc.getElementsByTagName('THEAD')[0];
-    let row = doc.createElement('TR');
-    head.appendChild(row);
+    let row = insertChild(doc, head, 'TR');
     keys.forEach(key => {
-        let input = doc.createElement('INPUT');
+        let td = insertChild(doc, row, 'TD');
+        td.classList.add('filter');
+        let input = insertChild(doc, td, 'INPUT');
         let id = 'filter-'.concat(key);
         input.id = id;
         input.setAttribute('type', 'text');
         input.oninput = createFilter(doc, id, key, list);
-        let td = doc.createElement('TD');
-        td.classList.add('filter');
-        td.appendChild(input);
-        row.appendChild(td);
     });
 };
 
@@ -99,3 +95,8 @@ function createDataRow(doc, pattern, keys) {
     return row;
 };
 
+function insertChild(doc, parent, element) {
+    let child = doc.createElement(element);
+    parent.appendChild(child);
+    return child;
+};

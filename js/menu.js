@@ -64,6 +64,9 @@ function insertFilterRow(doc, keys, list) {
 function createFilter(doc, id, key, list) {
     let fun = () => {
         let input = doc.getElementById(id);
+        let filters = doc.querySelectorAll('*[id^="filter-"]')
+                         .filter(input => input.value)
+                         .map(input => [cutLeft(input.id, 7), input.value]);
         let value = input.value;
         if (value) {
             list.filter( item => {
@@ -79,6 +82,10 @@ function createFilter(doc, id, key, list) {
         return false;
     };
     return fun;
+};
+
+function cutLeft(string, n) {
+    return string.substring(string.length - n);
 };
 
 function createDataRow(doc, pattern, keys) {

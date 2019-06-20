@@ -70,7 +70,7 @@ function createFilter(doc, id, key, list) {
         if (filters) {
             list.filter( item => {
                 let matches = filters.filter(
-                    ([key, val]) => item.values()[key].toLowerCase.includes(val.toLowerCase)
+                    ([key, val]) => item.values()[key].toLowerCase().includes(val.toLowerCase())
                 ).length;
                 if (matches === filters.length) {
                     return true;

@@ -63,14 +63,16 @@ function insertFilterRow(doc, keys, list) {
 
 function createFilter(doc, id, key, list) {
     let fun = () => {
-        let input = doc.getElementById(id);
-        let filters = doc.querySelectorAll('*[id^="filter-"]')
-                         .filter(input => input.value)
-                         .map(input => [cutLeft(input.id, 7), input.value]);
-        let value = input.value;
-        if (value) {
+        let inputNodes = doc.querySelectorAll('*[id^="filter-"]');
+        let filters = Array.from(inputNodes)
+            .filter(input => input.value)
+            .map(input => [input.id.substring(7), input.value]);
+        if (filters) {
             list.filter( item => {
-                if (item.values()[key].startsWith(value)) {
+                let matches = filters.filter(
+                    ([key, val]) => item.values()[key].toLowerCase.includes(val.toLowerCase)
+                ).length;
+                if (matches === filters.length) {
                     return true;
                 } else {
                     return false;
@@ -82,10 +84,6 @@ function createFilter(doc, id, key, list) {
         return false;
     };
     return fun;
-};
-
-function cutLeft(string, n) {
-    return string.substring(string.length - n);
 };
 
 function createDataRow(doc, pattern, keys) {

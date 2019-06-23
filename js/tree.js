@@ -2,10 +2,9 @@ const TREE_CSV = 'resources/tree.csv';
 const NODE_CSV = 'resources/node.csv';
 const LEAF_CSV = 'resources/leaf.csv';
 const DISPLAY_VALUES = [
-    ['SIMPLE_VALUE', 'Value'],
-    ['MODE',         'Mode'],
-    ['PATTERN_NAME', 'Pattern'],
-    ['SENSITIVITY',  'Sensitivity']
+    ['Characteristics', 'Characteristics'],
+    ['Occurance', 'Occurance'],
+    ['People', 'People']
 ];
 
 async function readCsv(path) {
@@ -71,8 +70,8 @@ function capitalize(string) {
 };
 
 function getContent(nodeId, data) {
-    let node = data[1].find(obj => obj['ID'] === nodeId);
-    let leaf = data[2].find(obj => obj['ID'] === nodeId);
+    let node = data[1].find(obj => obj['Id'] === nodeId);
+    let leaf = data[2].find(obj => obj['Id'] === nodeId);
     let n, type;
     if (leaf) {
         type = 'leaf';

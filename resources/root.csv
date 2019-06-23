@@ -1,5 +1,5 @@
-Kingdom,RootId
-,DESC-PMNT-OUT-SINGLE
-,DESC-PMNT-IN-SINGLE
-,Serotonergic psychedelics
-,Other
+Type,Color,RootId
+Psychedelics,Yin Min Blue,Psychedelics
+Psychedelics,Green,Serotonergic psychedelics
+Algorithms,Yin Min Blue,Machine learning algorithms
+Algorithms,Green,Unsupervised learning

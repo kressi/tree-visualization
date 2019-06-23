@@ -1,11 +1,19 @@
-ID,SIMPLE_VALUE,MODE
-SIMPLE-BANKTRANSACTIONCD,BankTransactionCode,
-SIMPLE-CREDITOR-PARTYADDRESS,CreditorPartyAddress,
-SIMPLE-CREDITOR-PARTYCOUNTRY,CreditorPartyCountry,
-SIMPLE-CREDITOR-PARTYNAME,CreditorPartyName,
-SIMPLE-CREDITOR-REFERENCE,CreditorReference,
-SIMPLE-DEBTOR-PARTYADDRESS,DebtorPartyAddress,
-SIMPLE-DEBTOR-PARTYCOUNTRY,DebtorPartyCountry,
-SIMPLE-DEBTOR-PARTYNAME,DebtorPartyName,
-SIMPLE-INDIVBOOKINGTXT,IndividualBookingText,
-SIMPLE-REVERSALINDICATOR,ReversalIndicator,
+Id,Occurance,People
+LSD,,Timothy Leary
+Psilocybin,Psilocybe semilanceata,Terence McKenna
+DMT,,Rick Strassman
+Mescaline,Peyote cactus,Native Americans
+MDMA,,Alexander Shulgin
+Salvinorin A,Salvia Divinorum,
+Support vector machines,,
+Linear regression,,
+Decision trees,,
+k-nearest neighbor,,
+Hierarchical clustering,,
+k-means,,
+Local Outlier Factor,,
+Autoencoders,,
+Deep Belief Nets,,
+Self-organizing map,,
+Brute force,,
+Direct policy search,,

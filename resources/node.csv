@@ -1,16 +1,20 @@
-ID,PATTERN_NAME,MODE,SENSITIVITY
-DESC-PMNT-IN-SINGLE,,,
-DESC-PMNT-OUT-SINGLE,,,
-HEADER-CREDITOR-PARTY,Header,,Salary
-HEADER-CREDITOR-REFERENCE,Header,,
-HEADER-DEBTOR-PARTY,Header,,Salary
-HEADLINE-BANKTRANSACTIONCD,Headline,,
-HEADLINE-CREDITOR-PARTY-NAME,Headline,,
-HEADLINE-CREDITOR-REFERENCE,Headline,,
-HEADLINE-DEBTOR-PARTY-NAME,Headline,,
-HEADLINE-INDIVBOOKTXT-TRXCD,Headline,,
-OPTHEADLINE-CREDITOR-PARTY-ADDRESS,OptionalHeadline,Enhanced,
-OPTHEADLINE-DEBTOR-PARTY-ADDRESS,OptionalHeadline,Enhanced,
-OPTHEADLINE-REVERSAL,OptionalHeadline,,
-SUBHEADER-BANKTRANSACTIONCD,Subheader,,
-SUBHEADER-PMNT-OUT-SINGLE,Subheader,,
+Id,Characteristics
+Psychedelics,
+Serotonergic psychedelics,Classical hallucinogens
+Ergolines,
+Tryptamines,
+Phenethylamines,
+Empathogen-entactogens,Feelings of euphoria and empathy
+Other,Atypical psychedelic
+Machine learning algorithms,
+Supervised learning,
+Unsupervised learning,
+Clustering,
+Unsupervised learning,
+Anomalie detection,
+Unsupervised learning,
+Neural networks,
+Neural networks,
+Neural networks,
+Machine learning algorithms,
+Reinforcement learning,

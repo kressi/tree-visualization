@@ -1,35 +1,35 @@
-.pattern-link {
+.root-link {
     cursor: pointer;
 }
 
-#pattern-list .sort:before {
+#root-list .sort:before {
     content: '↕\a0';
 }
 
-#pattern-list .sort {
-    cursor: pointer; 
+#root-list .sort {
+    cursor: pointer;
 }
 
-#pattern-list table {
+#root-list table {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-#pattern-list td, #pattern-list th {
+#root-list td, #root-list th {
     border: 1px solid #ddd;
     padding: 2px;
 }
 
-#pattern-list tr:nth-child(even){
+#root-list tr:nth-child(even){
     background-color: #f2f2f2;
 }
 
-#pattern-list tr:hover {
+#root-list tr:hover {
     background-color: #ddd;
 }
 
-#pattern-list th {
+#root-list th {
     padding-top: 4px;
     padding-bottom: 4px;
     text-align: left;

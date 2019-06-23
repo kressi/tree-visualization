@@ -1,7 +1,7 @@
-const STRUCTURE_CSV = 'resources/structure.csv';
-const CONTENT_CSV = 'resources/content.csv';
-const SIMPLE_CSV = 'resources/simple-content.csv';
-const NODE_VALUES = [
+const TREE_CSV = 'resources/tree.csv';
+const NODE_CSV = 'resources/node.csv';
+const LEAF_CSV = 'resources/leaf.csv';
+const DISPLAY_VALUES = [
     ['SIMPLE_VALUE', 'Value'],
     ['MODE',         'Mode'],
     ['PATTERN_NAME', 'Pattern'],
@@ -14,40 +14,43 @@ async function readCsv(path) {
     return $.csv.toObjects(csv);
 };
 
+// data[0]: tree structure
+// data[1]: node values
+// data[2]: leaf values
 const data = async () => {
     return await Promise.all([
-        readCsv(STRUCTURE_CSV),
-        readCsv(CONTENT_CSV),
-        readCsv(SIMPLE_CSV)
+        readCsv(TREE_CSV),
+        readCsv(NODE_CSV),
+        readCsv(LEAF_CSV)
     ]);
 };
 
-async function drawTree(contentId) {
-    data().then(data => createChartConfig(data, contentId))
+async function drawTree(nodeId) {
+    data().then(data => createChartConfig(data, nodeId))
           .then(config => Treant(config));
 };
 
-function createChartNode(data, contentId, condition, simpleInd) {
+function createChartNode(data, nodeId, simpleInd) {
     const tree = data[0];
     let simpleChild = {cnt: 0};
-    const subTree = tree.filter(obj => obj['CONTENT_ID'] === contentId)
-                        .map(child => createChartNode(data, child['CHILD_CONTENT_ID'], child['CONDITION'], simpleChild));
-    const [type, node] = getContent(contentId, data);
+    const subTree = tree.filter(obj => obj['NodeId'] === nodeId)
+                        .map(child => createChartNode(data, child['ChildNodeId'], simpleChild));
+    const [type, node] = getContent(nodeId, data);
     const treeObj = {
-        text: createText(contentId, node, condition)
+        text: createText(nodeId, node)
     };
 
-    if (type === 'simple') { simpleInd.cnt++; };
+    if (type === 'leaf') { simpleInd.cnt++; };
     if (simpleChild.cnt > 0) { treeObj.collapsed = true; };
     if (subTree.length > 0) { treeObj.children = subTree; };
 
     return treeObj;
 };
 
-function createText(contentId, nodeValues, condition) {
-    let text = { name: contentId };
+function createText(nodeId, nodeValues) {
+    let text = { name: nodeId };
     if (nodeValues) {
-        NODE_VALUES.forEach(function([key, name]) {
+        DISPLAY_VALUES.forEach(function([key, name]) {
             let value = nodeValues[key];
             if (value) {
                 text[name] = createTextAttr(name, value);
@@ -55,9 +58,6 @@ function createText(contentId, nodeValues, condition) {
         });
     } else {
         text.info = '{content missing}';
-    };
-    if (condition) {
-        text.condition = createTextAttr('IF', condition);
     };
     return text;
 };
@@ -70,28 +70,28 @@ function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-function getContent(contentId, data) {
-    let content = data[1].find(obj => obj['ID'] === contentId);
-    let simple = data[2].find(obj => obj['ID'] === contentId);
-    let node, type;
-    if (simple) {
-        type = 'simple';
-        node = simple;
-    } else if (content) {
-        type = 'content';
-        node = content;
+function getContent(nodeId, data) {
+    let node = data[1].find(obj => obj['ID'] === nodeId);
+    let leaf = data[2].find(obj => obj['ID'] === nodeId);
+    let n, type;
+    if (leaf) {
+        type = 'leaf';
+        n = leaf;
+    } else if (node) {
+        type = 'node';
+        n = node;
     };
-    return [type, node];
+    return [type, n];
 };
 
-function createChartConfig(data, contentId) {
-    const struct = createChartNode(data, contentId);
+function createChartConfig(data, nodeId) {
+    const struct = createChartNode(data, nodeId);
     return $.extend({}, CHART_CONFIG_0, {nodeStructure: struct});
 };
 
 const CHART_CONFIG_0 = {
     chart: {
-        container: '#description-tree',
+        container: '#tree',
         animateOnInit: true,
         rootOrientation: 'WEST',
         node: {

@@ -1,27 +1,33 @@
-const PATTERN_CSV = 'resources/pattern.csv';
+// List of root elements that are found in nodes.csv
+const ROOT_CSV = 'resources/root.csv';
+// Attribute name of root element which links root elements
+// in root.csv with elements in node.csv
+const ROOT_ID = 'RootId';
+// Prefix for html element ids of filters
+const FILTER_PREFIX = 'filter-';
 
 window.addEventListener('load', function(){
-    readCsv(PATTERN_CSV)
-        .then(patterns => createTable(document, patterns))
+    readCsv(ROOT_CSV)
+        .then(roots => createTable(document, roots))
         .then(function([table, keys]) {
-            document.getElementById('pattern-list').appendChild(table);
-            let list = new List('pattern-list', {valueNames: keys});
+            document.getElementById('root-list').appendChild(table);
+            let list = new List('root-list', {valueNames: keys});
             insertFilterRow(document, keys, list);
         });
 });
 
-function createTable(doc, patterns) {
+function createTable(doc, roots) {
     let table = doc.createElement('TABLE');
     var keys;
-    if (patterns.length > 0) {
-        keys = Object.keys(patterns[0]);
+    if (roots.length > 0) {
+        keys = Object.keys(roots[0]);
         let head = createTableHead(doc, keys);
         table.appendChild(head);
         let tbody = doc.createElement('TBODY');
         table.appendChild(tbody);
         tbody.classList.add('list');
-        patterns.forEach(pattern => {
-            let row = createDataRow(doc, pattern, keys);
+        roots.forEach(root => {
+            let row = createDataRow(doc, root, keys);
             tbody.appendChild(row);
         });
     };
@@ -54,7 +60,7 @@ function insertFilterRow(doc, keys, list) {
         let td = insertChild(doc, row, 'TD');
         td.classList.add('filter');
         let input = insertChild(doc, td, 'INPUT');
-        let id = 'filter-'.concat(key);
+        let id = FILTER_PREFIX.concat(key);
         input.id = id;
         input.setAttribute('type', 'text');
         input.oninput = createFilter(doc, id, key, list);
@@ -63,10 +69,10 @@ function insertFilterRow(doc, keys, list) {
 
 function createFilter(doc, id, key, list) {
     let fun = () => {
-        let inputNodes = doc.querySelectorAll('*[id^="filter-"]');
+        let inputNodes = doc.querySelectorAll(`*[id^="${FILTER_PREFIX}"]`);
         let filters = Array.from(inputNodes)
             .filter(input => input.value)
-            .map(input => [input.id.substring(7), input.value]);
+            .map(input => [input.id.substring(FILTER_PREFIX.length), input.value]);
         if (filters) {
             list.filter( item => {
                 let matches = filters.filter(
@@ -86,15 +92,15 @@ function createFilter(doc, id, key, list) {
     return fun;
 };
 
-function createDataRow(doc, pattern, keys) {
+function createDataRow(doc, root, keys) {
     let row = doc.createElement('TR');
-    row.classList.add('pattern-link');
+    row.classList.add('root-link');
     row.addEventListener('click', function () {
-        drawTree(pattern['CONTENT_ID']);
+        drawTree(root[ROOT_ID]);
     });
     keys.forEach(key => {
         let cell = row.insertCell();
-        cell.innerHTML = pattern[key];
+        cell.innerHTML = root[key];
         cell.classList.add(key);
     });
     return row;
